@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Image, StyleSheet, Text, TextInput, View} from 'react-native';
 import ImageButton from "@/components/elements/ImageButton";
 
@@ -6,6 +6,14 @@ export default function _screen() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [isValid, setValid] = useState(false);
+
+    const handleSubmit = () => {
+        if (username === 'fulano' && password === '123') {
+            setValid(true);
+        } else {
+            setValid(false);
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -16,15 +24,15 @@ export default function _screen() {
             <View style={styles.bottomContainer}>
                 <View style={styles.inputArea}>
                     <Text style={styles.label}>Usuário</Text>
-                    <TextInput style={styles.inputContainer} placeholder={'Digite seu usuário'} />
+                    <TextInput value={username} onChangeText={setUsername} style={styles.inputContainer} placeholder={'Digite seu usuário'} />
                 </View>
                 <View style={styles.inputArea}>
                     <Text style={styles.label}>Senha</Text>
-                    <TextInput secureTextEntry={true} style={styles.inputContainer} placeholder={'Digite sua senha'} />
+                    <TextInput value={password} onChangeText={setPassword} secureTextEntry={true} style={styles.inputContainer} placeholder={'Digite sua senha'} />
                 </View>
             </View>
             <View style={styles.bottomContainer}>
-                <ImageButton text={'Entrar'} onPress={() => {}} />
+                <ImageButton text={'Entrar'} onPress={() => handleSubmit()} />
             </View>
         </View>
     )
