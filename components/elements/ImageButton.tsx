@@ -1,16 +1,16 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 
 type ButtonProps = {
-    text: string;
+    source: any;
     onPress: () => void;
 }
 
-export default function ImageButton({ text, onPress }: ButtonProps) {
+export default function ImageButton({ source, onPress }: ButtonProps) {
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.loginButton} >
-                <Text style={styles.textButton}>{text}</Text>
+            <TouchableOpacity onPress={onPress} style={styles.loginButton} >
+                <Image style={styles.image} source={source} />
             </TouchableOpacity>
         </View>
     )
@@ -23,12 +23,15 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     loginButton: {
-        backgroundColor: '#192236',
         width: '100%',
         borderRadius: 5,
         alignItems: 'center',
         justifyContent: 'center',
         padding: 10
+    },
+    image: {
+        width: '80%',
+        height: 50,
     },
     textButton: {
         color: '#fff',
