@@ -1,9 +1,24 @@
-export const groupByCountry = (data: any[], key: keyof typeof data[0]) => {
-    return data.reduce((result: any, item: any) => {
-        if (!result[item[key]]) {
-            result[item[key]] = { title: item[key], data: [] };
+export const groupByCountry = (data: any[]) => {
+    const grouped = data.reduce((result: any, item: any) => {
+        if (!result[item.origin]) {
+            result[item.origin] = { title: item.origin, data: [] };
         }
-        result[item[key]].data.push(item);
+        result[item.origin].data.push(item);
+        if (!result[item.destination]) {
+            result[item.destination] = { title: item.destination, data: [] };
+        }
+        result[item.destination].data.push(item);
+
         return result;
     }, {});
+
+    const sortedKeys = Object.keys(grouped).sort();
+
+    const sortedGrouped = sortedKeys.reduce((acc, currentKey) => {
+        //@ts-ignore
+        acc[currentKey] = grouped[currentKey];
+        return acc;
+    }, {});
+
+    return sortedGrouped;
 };

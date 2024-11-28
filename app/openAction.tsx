@@ -3,14 +3,16 @@ import {Pressable, Text, View} from 'react-native';
 // Using the provided hook
 import { useActionSheet } from '@expo/react-native-action-sheet';
 import {AntDesign} from "@expo/vector-icons";
-import {router, useRouter} from "expo-router";
+import {router, usePathname, useRouter} from "expo-router";
 
 export default function OpenAction() {
     const { showActionSheetWithOptions } = useActionSheet();
     const router = useRouter();
+    const pathname = usePathname();
 
     const onPress = () => {
-        const options = ['Sair', 'Sobre', 'Cancelar'];
+        const isAbout = pathname === '/about'
+        const options = isAbout ? ['Sair', 'Cancelar'] : ['Sair', 'Cancelar', 'Sobre',];
         const destructiveButtonIndex = 0;
         const cancelButtonIndex = 2;
 
@@ -21,15 +23,19 @@ export default function OpenAction() {
         // @ts-ignore
         }, (selectedIndex: number) => {
             switch (selectedIndex) {
-                case 1:
+                case 2:
                     router.push('/about')
                     break;
 
                 case destructiveButtonIndex:
+                    if (router.canDismiss()) {
+                        router.dismissAll()
+                    }
                     router.replace('/')
                     break;
 
                 case cancelButtonIndex:
+                    break
             }});
     }
 
